@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/bottom_nav_nowPlaying"
+        android:icon="@drawable/nowplaying_icon"
+        android:title="Now Playing"/>
+
+    <item
+        android:id="@+id/bottom_nav_popular"
+        android:icon="@drawable/popular_icon2"
+        android:title="Most Popular"/>
+
+    <item
+        android:id="@+id/bottom_nav_topRated"
+        android:icon="@drawable/top_rated"
+        android:title="Top Rated"
+        tools:ignore="HardcodedText"/>
+
+    <item
+        android:id="@+id/bottom_nav_upcoming"
+        android:icon="@drawable/upcoming_icon"
+        android:title="Upcoming"/>
+</menu>

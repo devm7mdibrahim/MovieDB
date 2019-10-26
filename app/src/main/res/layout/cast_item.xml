@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data class="CastDataBinding">
+        <import type="com.devmohamedibrahim1997.populartest.Utils.HelperClass" />
+
+        <variable
+            name="cast"
+            type="com.devmohamedibrahim1997.populartest.model.Cast" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/castCardViewImageView"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:scaleType="fitXY"
+                app:loadImage="@{HelperClass.getPosterUrl(cast.getProfilePath.toString())}"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/castCardViewTextView1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/castCardViewImageView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:gravity="start"
+                android:lines="2"
+                android:maxLines="2"
+                android:text="@{cast.getName}"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/castCardViewTextView2"
+                android:text="@{cast.getCharacter}"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/castCardViewTextView1"
+                android:layout_centerHorizontal="true"
+                android:gravity="start"
+                android:lines="2"
+                android:maxLines="2" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

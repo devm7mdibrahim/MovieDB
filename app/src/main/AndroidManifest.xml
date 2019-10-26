@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.devmohamedibrahim1997.populartest">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/NoActionBar2"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="true">
+
+        <activity android:name=".UI.DetailsActivity" />
+
+        <activity android:name=".UI.SplashActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".UI.MainActivity"/>
+
+        <activity
+            android:name=".UI.SearchActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/NoActionBar"/>
+
+
+        <activity
+            android:name=".UI.WatchLaterActivity"
+            android:theme="@style/NoActionBar"/>
+
+        <activity android:name=".UI.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize"/>
+    </application>
+
+</manifest>

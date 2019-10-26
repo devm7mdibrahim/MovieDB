@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="EntityDataBinding">
+        <import type="com.devmohamedibrahim1997.populartest.Utils.HelperClass"/>
+        <variable
+            name="movie"
+            type="com.devmohamedibrahim1997.populartest.model.MovieEntity" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/mainRelativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/watchLaterItemLogoImageView"
+                android:layout_width="125dp"
+                android:layout_height="200dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                app:loadImage="@{HelperClass.getPosterUrl(movie.getPosterPath)}"
+                tools:ignore="ContentDescription" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@id/watchLaterItemLogoImageView"
+                android:layout_toRightOf="@id/watchLaterItemLogoImageView"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                tools:ignore="RtlSymmetry">
+
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_below="@id/watchLaterItemYearTextView"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_star"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/watchLaterItemYearTextView"
+                    android:text="@{HelperClass.getReleasedYear(movie.getReleaseDate)}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/watchLaterItemTitleTextView"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:id="@+id/watchLaterItemTitleTextView"
+                    android:text="@{movie.getTitle}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#ffffff" />
+
+                <TextView
+                    android:id="@+id/watchLaterItemVoteAverageTextView"
+                    android:text="@{HelperClass.convertVoteAverageToString(movie.getVoteAverage)}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/watchLaterItemYearTextView"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toEndOf="@id/star"
+                    android:layout_toRightOf="@id/star"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:id="@+id/watchLaterItemOverViewTextView"
+                    android:text="@{movie.getOverView}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/watchLaterItemVoteAverageTextView"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:paddingTop="10dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/mainRelativeLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#212121" />
+    </RelativeLayout>
+</layout>
