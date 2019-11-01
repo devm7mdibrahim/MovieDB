@@ -16,6 +16,7 @@ import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.PopularFr
 import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.TopRatedFragment;
 import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.UpcomingFragment;
 import com.devmohamedibrahim1997.populartest.R;
+import com.devmohamedibrahim1997.populartest.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
@@ -24,32 +25,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.mainBottomNavigationView)
     BottomNavigationView bottomNavigationView;
-    @BindView(R.id.search_bar)
     SearchView searchView;
-    @BindView(R.id.mainToolBar)
     Toolbar toolbar;
-    @BindView(R.id.mainNavigationView)
     NavigationView navigationView;
-    @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
+    ActivityMainBinding mainBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        searchView = mainBinding.searchBar;
+        bottomNavigationView = mainBinding.mainBottomNavigationView;
+        toolbar = mainBinding.mainToolBar;
+        navigationView = mainBinding.mainNavigationView;
+        drawerLayout = mainBinding.drawerLayout;
+
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new NowPlayingFragment()).commit();

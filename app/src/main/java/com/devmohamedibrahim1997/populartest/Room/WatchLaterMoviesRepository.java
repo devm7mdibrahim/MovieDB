@@ -42,7 +42,6 @@ class WatchLaterMoviesRepository {
             movieDao.insertMovie(movies[0]);
             return null;
         }
-
     }
 
     private static class DeleteMovieAsyncTask extends AsyncTask<MovieEntity,Void,Void>{

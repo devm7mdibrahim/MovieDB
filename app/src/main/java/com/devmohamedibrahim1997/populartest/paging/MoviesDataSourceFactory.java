@@ -12,6 +12,7 @@ public class MoviesDataSourceFactory extends DataSource.Factory {
     public MoviesDataSourceFactory(String query){
         this.query = query;
     }
+
     @NonNull
     @Override
     public DataSource create() {

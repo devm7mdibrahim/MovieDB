@@ -22,7 +22,6 @@
                 android:id="@+id/watchLaterItemLogoImageView"
                 android:layout_width="125dp"
                 android:layout_height="200dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="5dp"
@@ -35,8 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_toEndOf="@id/watchLaterItemLogoImageView"
-                android:layout_toRightOf="@id/watchLaterItemLogoImageView"
-                android:paddingLeft="5dp"
                 android:paddingStart="5dp"
                 tools:ignore="RtlSymmetry">
 
@@ -73,11 +70,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/watchLaterItemYearTextView"
-                    android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="12dp"
                     android:layout_toEndOf="@id/star"
-                    android:layout_toRightOf="@id/star"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                 <TextView

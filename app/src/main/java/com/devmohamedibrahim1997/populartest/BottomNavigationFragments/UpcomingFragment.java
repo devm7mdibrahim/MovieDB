@@ -10,14 +10,15 @@ import com.devmohamedibrahim1997.populartest.UI.MovieViewModel;
 import com.devmohamedibrahim1997.populartest.R;
 import com.devmohamedibrahim1997.populartest.UI.DetailsActivity;
 import com.devmohamedibrahim1997.populartest.adapter.MovieAdapter;
+import com.devmohamedibrahim1997.populartest.databinding.FragmentUpcomingBinding;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.getScreenOrientation;
 import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.isNetworkAvailable;
@@ -25,21 +26,20 @@ import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.showSnackB
 
 public class UpcomingFragment extends Fragment {
 
-    @BindView(R.id.upcomingRecyclerView)
-    RecyclerView movieRecyclerView;
+    private RecyclerView movieRecyclerView;
     private MovieAdapter recyclerViewAdapter;
     private FragmentActivity activity;
     private MovieViewModel movieViewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
-        ButterKnife.bind(this, view);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FragmentUpcomingBinding upcomingBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_upcoming, container, false);
+        movieRecyclerView = upcomingBinding.upcomingRecyclerView;
 
         activity = getActivity();
         initRecyclerView();
         initViewModel();
-        return view;
+        return upcomingBinding.getRoot();
     }
 
     private void initViewModel() {

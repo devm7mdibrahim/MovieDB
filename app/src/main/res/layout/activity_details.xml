@@ -72,15 +72,15 @@
                                 tools:ignore="ContentDescription"
                                 android:background="@null"/>
 
-                            <ImageView
-                                android:id="@+id/detailBackImageView"
+                            <ImageButton
+                                android:id="@+id/detailBackImageButton"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_margin="25dp"
                                 android:layout_gravity="top|start"
                                 android:contentDescription="back button"
-                                android:onClick="detailBack"
-                                android:src="@drawable/ic_back" />
+                                android:src="@drawable/ic_back"
+                                android:background="@null"/>
 
                         </FrameLayout>
 

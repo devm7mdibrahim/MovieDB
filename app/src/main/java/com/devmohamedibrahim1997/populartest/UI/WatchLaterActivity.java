@@ -1,5 +1,6 @@
 package com.devmohamedibrahim1997.populartest.UI;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,17 +14,19 @@ import android.widget.Toast;
 import com.devmohamedibrahim1997.populartest.R;
 import com.devmohamedibrahim1997.populartest.Room.WatchLaterMoviesViewModel;
 import com.devmohamedibrahim1997.populartest.adapter.WatchLaterAdapter;
+import com.devmohamedibrahim1997.populartest.databinding.ActivityWatchLaterBinding;
 
 
 public class WatchLaterActivity extends AppCompatActivity {
 
+    ActivityWatchLaterBinding watchLaterBinding;
     private WatchLaterAdapter adapter;
     private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watch_later);
+        watchLaterBinding = DataBindingUtil.setContentView(this,R.layout.activity_watch_later);
 
         initRecyclerView();
         initActionBar();
@@ -65,7 +68,7 @@ public class WatchLaterActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        recyclerView = findViewById(R.id.watchLaterRecyclerView);
+        recyclerView = watchLaterBinding.watchLaterRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new WatchLaterAdapter(this);
         recyclerView.setAdapter(adapter);

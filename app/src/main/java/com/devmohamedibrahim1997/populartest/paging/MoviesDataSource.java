@@ -1,6 +1,5 @@
 package com.devmohamedibrahim1997.populartest.paging;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 import androidx.annotation.NonNull;
 import com.devmohamedibrahim1997.populartest.NetWork.APIClient;
@@ -21,7 +20,6 @@ public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
     MoviesDataSource(String query){
         this.query = query;
         movieDBAPI = APIClient.getInstance().create(MovieDBAPI.class);
-
     }
 
     @Override

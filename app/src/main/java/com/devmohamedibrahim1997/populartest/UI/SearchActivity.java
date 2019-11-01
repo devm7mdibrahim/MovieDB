@@ -8,13 +8,13 @@ import android.widget.SearchView;
 
 import com.devmohamedibrahim1997.populartest.R;
 import com.devmohamedibrahim1997.populartest.adapter.SearchAdapter;
+import com.devmohamedibrahim1997.populartest.databinding.ActivitySearchBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.hideKeyboard;
 import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.isNetworkAvailable;
@@ -23,19 +23,16 @@ import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.showSnackB
 
 public class SearchActivity extends AppCompatActivity {
 
-
-    @BindView(R.id.searchRecyclerView)
-    RecyclerView searchRecyclerView;
     private SearchAdapter searchAdapter;
     private MovieViewModel searchViewModel;
     private SearchActivity activity;
+    private RecyclerView searchRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        ButterKnife.bind(this);
-
+        ActivitySearchBinding searchBinding = DataBindingUtil.setContentView(this,R.layout.activity_search);
+        searchRecyclerView = searchBinding.searchRecyclerView;
         activity = SearchActivity.this;
         initActionBar();
         initSearchRecyclerView();
@@ -87,7 +84,7 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem item = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

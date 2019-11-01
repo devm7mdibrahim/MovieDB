@@ -5,38 +5,32 @@ import android.widget.Toast;
 
 import com.devmohamedibrahim1997.populartest.R;
 import com.devmohamedibrahim1997.populartest.Utils.YoutubeConfig;
+import com.devmohamedibrahim1997.populartest.databinding.ActivityVideoPlayerBinding;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import androidx.databinding.DataBindingUtil;
 
 public class VideoPlayerActivity extends YouTubeBaseActivity {
 
     String videoKey;
     ArrayList<String> videosKeysArrayList;
 
-    @BindView(R.id.youtubePlayerView)
-    YouTubePlayerView youtubePlayerView;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_player);
-        ButterKnife.bind(this);
+        ActivityVideoPlayerBinding videoPlayerBinding = DataBindingUtil.setContentView(this,R.layout.activity_video_player);
 
         if (getIntent().getExtras() != null) {
             videoKey = getIntent().getExtras().getString("videoKey");
             videosKeysArrayList = getIntent().getExtras().getStringArrayList("videosKeysArrayList");
-
         }
 
-        youtubePlayerView.initialize(YoutubeConfig.getYoutubeApiKey(), new YouTubePlayer.OnInitializedListener() {
+        videoPlayerBinding.youtubePlayerView.initialize(YoutubeConfig.getYoutubeApiKey(), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 if (videoKey != null) {

@@ -3,7 +3,6 @@ package com.devmohamedibrahim1997.populartest.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.devmohamedibrahim1997.populartest.R;
@@ -25,9 +24,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.isNetworkAvailable;
 import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.showSnackBar;
@@ -36,18 +32,13 @@ import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.showToast;
 public class DetailsActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.detailWatchLaterImageButton)
     ImageButton watchLaterImageButton;
-    @BindView(R.id.detailVideoPlayImageButton)
     ImageButton videoPlayImageButton;
+    ImageButton backImageButton;
 
-    @BindView(R.id.detailSimilarRecyclerView)
     RecyclerView similarMoviesRecyclerView;
-    @BindView(R.id.detailRecommendationRecyclerView)
     RecyclerView recommendedMoviesRecyclerView;
-    @BindView(R.id.detailGenresRecyclerView)
     RecyclerView genresRecyclerView;
-    @BindView(R.id.detailCastRecyclerView)
     RecyclerView castRecyclerView;
 
 
@@ -68,8 +59,8 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         detailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
-        ButterKnife.bind(this);
 
+        init();
         getMovieIntent();
         initGenreRecyclerView();
         initCastRecyclerView();
@@ -79,9 +70,52 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
+    private void init() {
+        similarMoviesRecyclerView = detailsBinding.detailSimilarRecyclerView;
+        recommendedMoviesRecyclerView = detailsBinding.detailRecommendationRecyclerView;
+        genresRecyclerView = detailsBinding.detailGenresRecyclerView;
+        castRecyclerView = detailsBinding.detailCastRecyclerView;
+        watchLaterImageButton = detailsBinding.detailWatchLaterImageButton;
+        videoPlayImageButton = detailsBinding.detailVideoPlayImageButton;
+        backImageButton = detailsBinding.detailBackImageButton;
+
+        watchLaterImageButton.setOnClickListener(view -> onWatchLaterImageClicked());
+        videoPlayImageButton.setOnClickListener(view -> onVideoPlayImageClicked());
+        backImageButton.setOnClickListener(view -> onBackImageButtonClicked());
+    }
+
+    private void initGenreRecyclerView() {
+        genresRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        genreAdapter = new GenreAdapter(this);
+        genresRecyclerView.setAdapter(genreAdapter);
+    }
+
+    private void initCastRecyclerView() {
+        LinearLayoutManager castLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        castRecyclerView.setLayoutManager(castLayoutManager);
+        castAdapter = new CastAdapter(this);
+        castRecyclerView.setAdapter(castAdapter);
+    }
+
+    private void initSimilarMoviesRecyclerView() {
+        LinearLayoutManager similarLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        similarMoviesRecyclerView.setLayoutManager(similarLayoutManager);
+        similarAdapter = new SimilarMovieAdapter(this);
+        similarMoviesRecyclerView.setAdapter(similarAdapter);
+    }
+
+    private void initRecommendedMoviesRecyclerView() {
+        LinearLayoutManager recommendedLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recommendedMoviesRecyclerView.setLayoutManager(recommendedLayoutManager);
+        recommendedAdapter = new RecommendedMovieAdapter(this);
+        recommendedMoviesRecyclerView.setAdapter(recommendedAdapter);
+    }
+
     private void getMovieIntent() {
         movieId = getIntent().getIntExtra("movieId", 0);
     }
+
+
 
     private void initViewModel(Bundle savedInstanceState) {
         if (isNetworkAvailable(DetailsActivity.this)) {
@@ -152,33 +186,6 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void initGenreRecyclerView() {
-        genresRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        genreAdapter = new GenreAdapter(this);
-        genresRecyclerView.setAdapter(genreAdapter);
-    }
-
-    private void initCastRecyclerView() {
-        LinearLayoutManager castLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        castRecyclerView.setLayoutManager(castLayoutManager);
-        castAdapter = new CastAdapter(this);
-        castRecyclerView.setAdapter(castAdapter);
-    }
-
-    private void initSimilarMoviesRecyclerView() {
-        LinearLayoutManager similarLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        similarMoviesRecyclerView.setLayoutManager(similarLayoutManager);
-        similarAdapter = new SimilarMovieAdapter(this);
-        similarMoviesRecyclerView.setAdapter(similarAdapter);
-    }
-
-    private void initRecommendedMoviesRecyclerView() {
-        LinearLayoutManager recommendedLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recommendedMoviesRecyclerView.setLayoutManager(recommendedLayoutManager);
-        recommendedAdapter = new RecommendedMovieAdapter(this);
-        recommendedMoviesRecyclerView.setAdapter(recommendedAdapter);
-    }
-
     private void getRecommendedMovies() {
         detailViewModel.getRecommendedMovies().observe(this, movies -> {
             recommendedAdapter.setData(movies);
@@ -210,18 +217,6 @@ public class DetailsActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @OnClick({R.id.detailVideoPlayImageButton, R.id.detailWatchLaterImageButton})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.detailVideoPlayImageButton:
-                onVideoPlayImageClicked();
-                break;
-            case R.id.detailWatchLaterImageButton:
-                onWatchLaterImageClicked();
-                break;
-        }
     }
 
     public void onVideoPlayImageClicked() {
@@ -263,7 +258,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    public void detailBack(View view) {
+    public void onBackImageButtonClicked() {
         finish();
     }
 }
