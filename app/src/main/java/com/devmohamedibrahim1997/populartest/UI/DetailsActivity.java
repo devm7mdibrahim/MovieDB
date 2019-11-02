@@ -3,6 +3,7 @@ package com.devmohamedibrahim1997.populartest.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 
 import com.devmohamedibrahim1997.populartest.R;
@@ -48,7 +49,7 @@ public class DetailsActivity extends AppCompatActivity {
     private GenreAdapter genreAdapter;
 
     private DetailViewModel detailViewModel;
-    ActivityDetailsBinding detailsBinding;
+    private ActivityDetailsBinding detailsBinding;
     private boolean exists = false;
     private int movieId;
     private String videoKey;
@@ -67,6 +68,7 @@ public class DetailsActivity extends AppCompatActivity {
         initSimilarMoviesRecyclerView();
         initRecommendedMoviesRecyclerView();
         initViewModel(savedInstanceState);
+        detailsBinding.detailSwipeRefresh.setOnRefreshListener(() -> initViewModel(null));
 
     }
 
@@ -115,8 +117,6 @@ public class DetailsActivity extends AppCompatActivity {
         movieId = getIntent().getIntExtra("movieId", 0);
     }
 
-
-
     private void initViewModel(Bundle savedInstanceState) {
         if (isNetworkAvailable(DetailsActivity.this)) {
             detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
@@ -133,12 +133,15 @@ public class DetailsActivity extends AppCompatActivity {
 
         } else {
             showSnackBar(DetailsActivity.this);
+            detailsBinding.detailProgressBar.setVisibility(View.INVISIBLE);
         }
     }
 
     private void getMovieDetails() {
         detailViewModel.getMovieDetails().observe(this, detailsResponse -> {
             if (detailsResponse != null) {
+                detailsBinding.detailSwipeRefresh.setRefreshing(false);
+                detailsBinding.detailProgressBar.setVisibility(View.INVISIBLE);
                 detailsBinding.setMovieDetails(detailsResponse);
                 genreAdapter.setData(detailsResponse.getGenres());
                 genreAdapter.notifyDataSetChanged();

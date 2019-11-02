@@ -34,12 +34,11 @@ public class NowPlayingFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentNowPlayingBinding nowPlayingBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_now_playing, container, false);
+        FragmentNowPlayingBinding nowPlayingBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_now_playing, container, false);
         movieRecyclerView = nowPlayingBinding.nowPlayingRecyclerView;
         activity = getActivity();
         initRecyclerView();
         initViewModel();
-
 
         return nowPlayingBinding.getRoot();
     }
@@ -57,7 +56,7 @@ public class NowPlayingFragment extends Fragment {
 
     private void getMovies() {
         movieViewModel.getMovies("now_playing").observe(this, movies -> {
-            if (movies != null) {
+            if (movies!= null) {
                 recyclerViewAdapter.submitList(movies);
                 movieRecyclerView.setAdapter(recyclerViewAdapter);
             }
