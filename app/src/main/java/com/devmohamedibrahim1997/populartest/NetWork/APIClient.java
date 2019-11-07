@@ -14,7 +14,6 @@ import static com.devmohamedibrahim1997.populartest.Utils.Constant.WRITE_TIMEOUT
 public class APIClient {
 
 
-
     public static Retrofit getInstance(){
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -23,10 +22,7 @@ public class APIClient {
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .build();
 
-
-        Retrofit.Builder builder = new Retrofit.Builder();
-
-        return builder
+        return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())

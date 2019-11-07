@@ -24,7 +24,7 @@ import static com.devmohamedibrahim1997.populartest.Utils.HelperClass.showSnackB
 public class SearchActivity extends AppCompatActivity {
 
     private SearchAdapter searchAdapter;
-    private MovieViewModel searchViewModel;
+    private MovieViewModel movieViewModel;
     private SearchActivity activity;
     private RecyclerView searchRecyclerView;
 
@@ -40,8 +40,8 @@ public class SearchActivity extends AppCompatActivity {
 
     void initViewModel(String query) {
         if (isNetworkAvailable(activity)) {
-            searchViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-            searchViewModel.setLiveData();
+            movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+            movieViewModel.setLiveData();
             searchAdapter.submitList(null);
             getMovies(query);
             onMovieClick(query);
@@ -52,7 +52,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getMovies(String query) {
-        searchViewModel.getMovies(query).observe(this, movies -> {
+        movieViewModel.getMovies(query).observe(this, movies -> {
             searchAdapter.submitList(movies);
             searchAdapter.notifyDataSetChanged();
         });
@@ -61,8 +61,8 @@ public class SearchActivity extends AppCompatActivity {
     private void onMovieClick(String query) {
         searchAdapter.setOnItemClickListener((position, v) -> {
             Intent intent = new Intent(SearchActivity.this, DetailsActivity.class);
-            if (searchViewModel.getMovies(query).getValue() != null) {
-                intent.putExtra("movieId", searchViewModel.getMovies(query).getValue().get(position).getId());
+            if (movieViewModel.getMovies(query).getValue() != null) {
+                intent.putExtra("movieId", movieViewModel.getMovies(query).getValue().get(position).getId());
             }
             startActivity(intent);
         });

@@ -52,7 +52,6 @@ public class DetailsActivity extends AppCompatActivity {
     private ActivityDetailsBinding detailsBinding;
     private boolean exists = false;
     private int movieId;
-    private String videoKey;
     private ArrayList<String> videosKeysArrayList = new ArrayList<>();
 
 
@@ -63,13 +62,15 @@ public class DetailsActivity extends AppCompatActivity {
 
         init();
         getMovieIntent();
-        initGenreRecyclerView();
-        initCastRecyclerView();
-        initSimilarMoviesRecyclerView();
-        initRecommendedMoviesRecyclerView();
-        initViewModel(savedInstanceState);
-        detailsBinding.detailSwipeRefresh.setOnRefreshListener(() -> initViewModel(null));
+        initViewModel();
+        getDetails(savedInstanceState);
+        detailsBinding.detailSwipeRefresh.setOnRefreshListener(() -> getDetails(null));
 
+    }
+
+    //get clicked movie id
+    private void getMovieIntent() {
+        movieId = getIntent().getIntExtra("movieId", 0);
     }
 
     private void init() {
@@ -81,56 +82,55 @@ public class DetailsActivity extends AppCompatActivity {
         videoPlayImageButton = detailsBinding.detailVideoPlayImageButton;
         backImageButton = detailsBinding.detailBackImageButton;
 
+        initRecyclersView();
+
         watchLaterImageButton.setOnClickListener(view -> onWatchLaterImageClicked());
         videoPlayImageButton.setOnClickListener(view -> onVideoPlayImageClicked());
-        backImageButton.setOnClickListener(view -> onBackImageButtonClicked());
+        backImageButton.setOnClickListener(view -> finish());
     }
 
-    private void initGenreRecyclerView() {
+    //init recyclers (genre, cast, similar, recommended)
+    private void initRecyclersView(){
+        //genre recyclerView
         genresRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         genreAdapter = new GenreAdapter(this);
         genresRecyclerView.setAdapter(genreAdapter);
-    }
 
-    private void initCastRecyclerView() {
-        LinearLayoutManager castLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        castRecyclerView.setLayoutManager(castLayoutManager);
+        //cast recyclerView
+        castRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         castAdapter = new CastAdapter(this);
         castRecyclerView.setAdapter(castAdapter);
-    }
 
-    private void initSimilarMoviesRecyclerView() {
-        LinearLayoutManager similarLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        similarMoviesRecyclerView.setLayoutManager(similarLayoutManager);
+        //similar movies recyclerView
+        similarMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         similarAdapter = new SimilarMovieAdapter(this);
         similarMoviesRecyclerView.setAdapter(similarAdapter);
-    }
 
-    private void initRecommendedMoviesRecyclerView() {
-        LinearLayoutManager recommendedLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recommendedMoviesRecyclerView.setLayoutManager(recommendedLayoutManager);
+        //recommended recyclerView
+        recommendedMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recommendedAdapter = new RecommendedMovieAdapter(this);
         recommendedMoviesRecyclerView.setAdapter(recommendedAdapter);
+
     }
 
-    private void getMovieIntent() {
-        movieId = getIntent().getIntExtra("movieId", 0);
+    //init viewModel
+    private void initViewModel() {
+        detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
     }
 
-    private void initViewModel(Bundle savedInstanceState) {
+    //get details
+    private void getDetails(Bundle savedInstanceState){
         if (isNetworkAvailable(DetailsActivity.this)) {
-            detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
             if (savedInstanceState == null) {
                 detailViewModel.init(movieId);
+                getMovieDetails();
+                getMovieVideos();
+                getMovieCredit();
+                getSimilarMovies();
+                onSimilarMoviesRecyclerViewItemClicked();
+                getRecommendedMovies();
+                onRecommendedMoviesRecyclerViewItemClicked();
             }
-
-            getMovieDetails();
-            getMovieCredit();
-            getSimilarMovies();
-            onSimilarMoviesRecyclerViewItemClicked();
-            getRecommendedMovies();
-            onRecommendedMoviesRecyclerViewItemClicked();
-
         } else {
             showSnackBar(DetailsActivity.this);
             detailsBinding.detailProgressBar.setVisibility(View.INVISIBLE);
@@ -210,25 +210,21 @@ public class DetailsActivity extends AppCompatActivity {
         detailViewModel.getMovieVideos().observe(this, videos -> {
             if (videos != null) {
                 try {
-                    videoKey = videos.get(0).getKey();
                     for(Videos video : videos){
                         videosKeysArrayList.add(video.getKey());
                     }
                 }catch (IndexOutOfBoundsException e){
-                    showToast(DetailsActivity.this,"No Trailer video");
+                    videoPlayImageButton.setVisibility(View.GONE);
                 }
-
             }
         });
+
     }
 
     public void onVideoPlayImageClicked() {
-        getMovieVideos();
-
-        //send movie key if its not null
-        if(videoKey != null) {
+        //send movieKeys if its not null
+        if(videosKeysArrayList != null) {
             Intent intent = new Intent(DetailsActivity.this, VideoPlayerActivity.class);
-            intent.putExtra("videoKey", videoKey);
             intent.putExtra("videosKeysArrayList",videosKeysArrayList);
             startActivity(intent);
         }
@@ -259,9 +255,5 @@ public class DetailsActivity extends AppCompatActivity {
             });
         }
 
-    }
-
-    public void onBackImageButtonClicked() {
-        finish();
     }
 }

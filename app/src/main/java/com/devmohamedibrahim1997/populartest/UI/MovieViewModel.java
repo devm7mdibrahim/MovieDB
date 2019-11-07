@@ -15,7 +15,6 @@ public class MovieViewModel extends ViewModel {
 
     private PagedList.Config config;
     private LiveData liveData;
-    private MutableLiveData<Boolean> progressBarLoading = new MutableLiveData<>();
 
     public MovieViewModel(){
         config = new PagedList.Config.Builder()

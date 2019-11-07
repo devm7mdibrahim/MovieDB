@@ -17,7 +17,6 @@ import androidx.databinding.DataBindingUtil;
 
 public class VideoPlayerActivity extends YouTubeBaseActivity {
 
-    String videoKey;
     ArrayList<String> videosKeysArrayList;
 
     @Override
@@ -26,14 +25,13 @@ public class VideoPlayerActivity extends YouTubeBaseActivity {
         ActivityVideoPlayerBinding videoPlayerBinding = DataBindingUtil.setContentView(this,R.layout.activity_video_player);
 
         if (getIntent().getExtras() != null) {
-            videoKey = getIntent().getExtras().getString("videoKey");
             videosKeysArrayList = getIntent().getExtras().getStringArrayList("videosKeysArrayList");
         }
 
         videoPlayerBinding.youtubePlayerView.initialize(YoutubeConfig.getYoutubeApiKey(), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                if (videoKey != null) {
+                if (videosKeysArrayList != null) {
                     youTubePlayer.loadVideos(videosKeysArrayList);
                 }
             }

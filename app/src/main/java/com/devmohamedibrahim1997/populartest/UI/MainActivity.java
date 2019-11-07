@@ -108,22 +108,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()) {
-            case R.id.nav_profile:
-                break;
-            case R.id.nav_watchLater:
-                startActivity(new Intent(MainActivity.this, WatchLaterActivity.class));
-                break;
-
-            case R.id.nav_settings:
-                break;
-
-            case R.id.nav_share:
-                break;
-
-            case R.id.nav_aboutus:
-                break;
-
+        if (menuItem.getItemId() == R.id.nav_watchLater) {
+            startActivity(new Intent(MainActivity.this, WatchLaterActivity.class));
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

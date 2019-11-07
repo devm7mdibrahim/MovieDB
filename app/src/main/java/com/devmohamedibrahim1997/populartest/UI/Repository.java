@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Repository {
+class Repository {
 
     private static Integer movieId;
     private MutableLiveData<CreditResponse> movieCredit = new MutableLiveData<>();
@@ -28,7 +28,7 @@ public class Repository {
     private MutableLiveData<List<Videos>> movieVideos = new MutableLiveData<>();
 
 
-    public static Repository getInstance(Integer mMovieId) {
+    static Repository getInstance(Integer mMovieId) {
         movieId = mMovieId;
         return new Repository();
     }
