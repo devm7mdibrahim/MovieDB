@@ -1,4 +1,4 @@
-package com.devmohamedibrahim1997.populartest.Utils;
+package com.devmohamedibrahim1997.populartest.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,8 +17,8 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.FragmentActivity;
 
-import static com.devmohamedibrahim1997.populartest.Utils.Constant.IMAGE_BACKDROP_PATH;
-import static com.devmohamedibrahim1997.populartest.Utils.Constant.IMAGE_POSTER_PATH;
+import static com.devmohamedibrahim1997.populartest.utils.Constant.IMAGE_BACKDROP_PATH;
+import static com.devmohamedibrahim1997.populartest.utils.Constant.IMAGE_POSTER_PATH;
 
 public class HelperClass {
 
@@ -51,9 +51,11 @@ public class HelperClass {
     }
 
     public static String getReleasedYear(String releaseDate){
-        String[] parts = releaseDate.split("-");
-        //or String[] parts = releaseDate.substring(0, 4);
-        return parts[0];
+        String[] parts = null;
+        if(releaseDate!= null) {
+            parts = releaseDate.split("-");
+        }
+        return parts != null ? parts[0] : null;
     }
 
     public static void showSnackBar(Activity activity){
@@ -64,7 +66,6 @@ public class HelperClass {
     public static void showToast(Context context,String toastMessage){
         Toast.makeText(context, ""+toastMessage, Toast.LENGTH_SHORT).show();
     }
-
 
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));

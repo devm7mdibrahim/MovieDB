@@ -1,4 +1,4 @@
-package com.devmohamedibrahim1997.populartest.Room;
+package com.devmohamedibrahim1997.populartest.database;
 
 import androidx.room.Database;
 import androidx.room.Room;

@@ -1,9 +1,7 @@
-package com.devmohamedibrahim1997.populartest.UI;
+package com.devmohamedibrahim1997.populartest.ui.main;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.NowPlayingFragment;
-import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.PopularFragment;
-import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.TopRatedFragment;
-import com.devmohamedibrahim1997.populartest.BottomNavigationFragments.UpcomingFragment;
 import com.devmohamedibrahim1997.populartest.R;
 import com.devmohamedibrahim1997.populartest.databinding.ActivityMainBinding;
+import com.devmohamedibrahim1997.populartest.ui.search.SearchActivity;
+import com.devmohamedibrahim1997.populartest.ui.watchLater.WatchLaterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -34,33 +30,25 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BottomNavigationView.OnNavigationItemSelectedListener {
 
-    BottomNavigationView bottomNavigationView;
-    SearchView searchView;
-    Toolbar toolbar;
-    NavigationView navigationView;
-    DrawerLayout drawerLayout;
+    private DrawerLayout drawerLayout;
+    private ActivityMainBinding mainBinding;
 
-    ActivityMainBinding mainBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        searchView = mainBinding.searchBar;
-        bottomNavigationView = mainBinding.mainBottomNavigationView;
-        toolbar = mainBinding.mainToolBar;
-        navigationView = mainBinding.mainNavigationView;
-        drawerLayout = mainBinding.drawerLayout;
-
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new NowPlayingFragment()).commit();
         }
-        setSearchView();
-        setNavigationDrawer();
-        setBottomNavigationView();
+
+        initSearchView();
+        initNavigationDrawer();
+        initBottomNavigationView();
     }
 
-    public void setSearchView() {
+    public void initSearchView() {
+        SearchView searchView = mainBinding.searchBar;
         searchView.onActionViewExpanded();
         searchView.clearFocus();
         searchView.setIconifiedByDefault(false);
@@ -86,23 +74,19 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    public void setNavigationDrawer() {
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+    public void initNavigationDrawer() {
+        NavigationView navigationView = mainBinding.mainNavigationView;
+        drawerLayout = mainBinding.drawerLayout;
+        setSupportActionBar(mainBinding.mainToolBar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, mainBinding.mainToolBar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        try {
-            View headerView = navigationView.getHeaderView(0);
-            TextView textView = headerView.findViewById(R.id.nameTextView);
-            textView.setText("User Name");
-        }catch (IndexOutOfBoundsException e){
-            Log.e("setNavigationDrawer: ", e.getMessage() );
-        }
-
+        View headerView = navigationView.getHeaderView(0);
+        TextView textView = headerView.findViewById(R.id.nameTextView);
+        textView.setText(R.string.user_name);
     }
 
     @Override
@@ -116,16 +100,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    public void setBottomNavigationView() {
+    public void initBottomNavigationView() {
+        BottomNavigationView bottomNavigationView = mainBinding.mainBottomNavigationView;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             Fragment fragment = null;
 
@@ -150,8 +126,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        bottomNavigationView.setOnNavigationItemReselectedListener(menuItem -> {
+        bottomNavigationView.setOnNavigationItemReselectedListener(menuItem -> {});
+    }
 
-        });
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

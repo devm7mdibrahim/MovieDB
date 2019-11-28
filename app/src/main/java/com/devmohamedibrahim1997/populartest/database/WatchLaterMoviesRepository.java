@@ -1,4 +1,4 @@
-package com.devmohamedibrahim1997.populartest.Room;
+package com.devmohamedibrahim1997.populartest.database;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
@@ -30,7 +30,6 @@ class WatchLaterMoviesRepository {
     LiveData<List<MovieEntity>> getAllMovies() {
         return allMovies;
     }
-
 
     private static class InsertMovieAsyncTask extends AsyncTask<MovieEntity,Void,Void>{
         private WatchLaterMoviesDao movieDao;

@@ -27,7 +27,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:context=".UI.DetailsActivity">
+                        tools:context=".ui.details.DetailsActivity">
 
                         <RelativeLayout
                             android:id="@+id/detailHeadRelativeLayout"
@@ -387,7 +387,7 @@
 
     <data>
 
-        <import type="com.devmohamedibrahim1997.populartest.Utils.HelperClass" />
+        <import type="com.devmohamedibrahim1997.populartest.utils.HelperClass" />
 
         <variable
             name="crewDirector"

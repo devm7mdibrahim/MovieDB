@@ -10,7 +10,7 @@
         android:id="@+id/nowPlayingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BottomNavigationFragments.NowPlayingFragment">
+        tools:context=".ui.main.NowPlayingFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/nowPlayingRecyclerView"

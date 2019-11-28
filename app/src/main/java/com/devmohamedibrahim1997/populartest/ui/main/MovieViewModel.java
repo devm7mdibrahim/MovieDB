@@ -1,15 +1,14 @@
-package com.devmohamedibrahim1997.populartest.UI;
+package com.devmohamedibrahim1997.populartest.ui.main;
 
 import com.devmohamedibrahim1997.populartest.model.Movie;
 import com.devmohamedibrahim1997.populartest.paging.MoviesDataSourceFactory;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import static com.devmohamedibrahim1997.populartest.Utils.Constant.PAGE_SIZE;
+import static com.devmohamedibrahim1997.populartest.utils.Constant.PAGE_SIZE;
 
 public class MovieViewModel extends ViewModel {
 
@@ -31,8 +30,7 @@ public class MovieViewModel extends ViewModel {
         return liveData;
     }
 
-    public void setLiveData(){
+    public void removeLiveData(){
         liveData =null;
     }
-
 }

@@ -1,20 +1,21 @@
-package com.devmohamedibrahim1997.populartest.UI;
+package com.devmohamedibrahim1997.populartest.ui.details;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import com.devmohamedibrahim1997.populartest.model.CreditResponse;
 import com.devmohamedibrahim1997.populartest.model.Movie;
 import com.devmohamedibrahim1997.populartest.model.DetailsResponse;
 import com.devmohamedibrahim1997.populartest.model.Videos;
+import com.devmohamedibrahim1997.populartest.repository.Repository;
 
 import java.util.List;
 
 public class DetailViewModel extends ViewModel {
-    private MutableLiveData<CreditResponse> movieCredit;
-    private MutableLiveData<DetailsResponse> movieDetail;
-    private MutableLiveData<List<Movie>> similarMovies;
-    private MutableLiveData<List<Movie>> recommendedMovies;
-    private MutableLiveData<List<Videos>> movieVideos;
+    private LiveData<CreditResponse> movieCredit;
+    private LiveData<DetailsResponse> movieDetail;
+    private LiveData<List<Movie>> similarMovies;
+    private LiveData<List<Movie>> recommendedMovies;
+    private LiveData<List<Videos>> movieVideos;
 
     public void init(Integer movieId){
         Repository mRepository = Repository.getInstance(movieId);
@@ -25,23 +26,23 @@ public class DetailViewModel extends ViewModel {
         movieVideos = mRepository.getMovieVideos();
     }
 
-    MutableLiveData<CreditResponse> getMovieCredit() {
+    LiveData<CreditResponse> getMovieCredit() {
         return movieCredit;
     }
 
-    MutableLiveData<DetailsResponse> getMovieDetails() {
+    LiveData<DetailsResponse> getMovieDetails() {
         return movieDetail;
     }
 
-    MutableLiveData<List<Movie>> getSimilarMovies() {
+    LiveData<List<Movie>> getSimilarMovies() {
         return similarMovies;
     }
 
-    MutableLiveData<List<Movie>> getRecommendedMovies() {
+    LiveData<List<Movie>> getRecommendedMovies() {
         return recommendedMovies;
     }
 
-    MutableLiveData<List<Videos>> getMovieVideos() {
+    LiveData<List<Videos>> getMovieVideos() {
         return movieVideos;
     }
 }

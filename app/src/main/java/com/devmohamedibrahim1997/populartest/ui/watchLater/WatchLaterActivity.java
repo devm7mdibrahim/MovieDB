@@ -1,4 +1,4 @@
-package com.devmohamedibrahim1997.populartest.UI;
+package com.devmohamedibrahim1997.populartest.ui.watchLater;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,16 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.MenuItem;
-import android.widget.Toast;
 import com.devmohamedibrahim1997.populartest.R;
-import com.devmohamedibrahim1997.populartest.Room.WatchLaterMoviesViewModel;
+import com.devmohamedibrahim1997.populartest.database.WatchLaterMoviesViewModel;
 import com.devmohamedibrahim1997.populartest.adapter.WatchLaterAdapter;
 import com.devmohamedibrahim1997.populartest.databinding.ActivityWatchLaterBinding;
+import com.devmohamedibrahim1997.populartest.ui.details.DetailsActivity;
+
+import static com.devmohamedibrahim1997.populartest.utils.Constant.MOVIE_ID;
+import static com.devmohamedibrahim1997.populartest.utils.HelperClass.showToast;
 
 
 public class WatchLaterActivity extends AppCompatActivity {
 
     ActivityWatchLaterBinding watchLaterBinding;
+    WatchLaterMoviesViewModel movieViewModel;
     private WatchLaterAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -28,43 +32,18 @@ public class WatchLaterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         watchLaterBinding = DataBindingUtil.setContentView(this,R.layout.activity_watch_later);
 
-        initRecyclerView();
         initActionBar();
+        initRecyclerView();
         initViewModel();
+        getMovies();
     }
 
-    private void initViewModel() {
-        WatchLaterMoviesViewModel movieViewModel = ViewModelProviders.of(this).get(WatchLaterMoviesViewModel.class);
-
-        //getMoviesFromRoomDataBase
-        movieViewModel.getAllMovies().observe(this, movieEntities -> {
-            adapter.setData(movieEntities);
-            adapter.notifyDataSetChanged();
-        });
-
-        //on movie click listener
-        adapter.setOnItemClickListener((position, v) -> {
-            Intent intent = new Intent(WatchLaterActivity.this, DetailsActivity.class);
-            if (movieViewModel.getAllMovies() != null) {
-                intent.putExtra("movieId", movieViewModel.getAllMovies().getValue().get(position).getId());
-            }
-            startActivity(intent);
-        });
-
-
-        //on movie swapped left delete it from data base
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                movieViewModel.delete(adapter.getMovieAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(WatchLaterActivity.this, "Movie Deleted", Toast.LENGTH_SHORT).show();
-            }
-        }).attachToRecyclerView(recyclerView);
+    private void initActionBar() {
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle("Watch Later Movies");
+        }
     }
 
     private void initRecyclerView() {
@@ -74,10 +53,43 @@ public class WatchLaterActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void initActionBar() {
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Watch Later Movies");
+    private void initViewModel() {
+        movieViewModel = ViewModelProviders.of(this).get(WatchLaterMoviesViewModel.class);
+    }
+
+    private void getMovies(){
+        movieViewModel.getAllMovies().observe(this, movies -> {
+            adapter.setData(movies);
+            adapter.notifyDataSetChanged();
+        });
+
+        onMovieClick();
+        onMovieSwiped();
+    }
+
+    private void onMovieClick() {
+        adapter.setOnItemClickListener((position, v) -> {
+            if (movieViewModel.getAllMovies().getValue() != null) {
+                Intent intent = new Intent(WatchLaterActivity.this, DetailsActivity.class);
+                intent.putExtra(MOVIE_ID, movieViewModel.getAllMovies().getValue().get(position).getId());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void onMovieSwiped(){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                movieViewModel.delete(adapter.getMovieAt(viewHolder.getAdapterPosition()));
+                showToast(WatchLaterActivity.this, "Movie Deleted");
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     @Override

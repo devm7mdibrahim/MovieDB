@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#081c24</color>
+    <color name="colorPrimary">#081C24</color>
     <color name="colorPrimaryDark">#000011</color>
-    <color name="colorSecondary">#01d277</color>
+    <color name="colorSecondary">#01D277</color>
+    <color name="placeHolder_bg">#777</color>
 </resources>

@@ -1,10 +1,10 @@
-package com.devmohamedibrahim1997.populartest.UI;
+package com.devmohamedibrahim1997.populartest.ui.video;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.devmohamedibrahim1997.populartest.R;
-import com.devmohamedibrahim1997.populartest.Utils.YoutubeConfig;
+import com.devmohamedibrahim1997.populartest.utils.YoutubeConfig;
 import com.devmohamedibrahim1997.populartest.databinding.ActivityVideoPlayerBinding;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import static com.devmohamedibrahim1997.populartest.utils.Constant.VIDEOS_KEYS;
+import static com.devmohamedibrahim1997.populartest.utils.HelperClass.showToast;
+
 public class VideoPlayerActivity extends YouTubeBaseActivity {
 
-    ArrayList<String> videosKeysArrayList;
+    ArrayList<String> videosKeysArrayList = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,7 +28,7 @@ public class VideoPlayerActivity extends YouTubeBaseActivity {
         ActivityVideoPlayerBinding videoPlayerBinding = DataBindingUtil.setContentView(this,R.layout.activity_video_player);
 
         if (getIntent().getExtras() != null) {
-            videosKeysArrayList = getIntent().getExtras().getStringArrayList("videosKeysArrayList");
+            videosKeysArrayList = getIntent().getExtras().getStringArrayList(VIDEOS_KEYS);
         }
 
         videoPlayerBinding.youtubePlayerView.initialize(YoutubeConfig.getYoutubeApiKey(), new YouTubePlayer.OnInitializedListener() {
@@ -38,9 +41,8 @@ public class VideoPlayerActivity extends YouTubeBaseActivity {
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Toast.makeText(VideoPlayerActivity.this, "failed to load video", Toast.LENGTH_SHORT).show();
+                showToast(VideoPlayerActivity.this, "failed to load video");
             }
-
         });
     }
 }

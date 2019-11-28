@@ -17,9 +17,9 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:fullBackupContent="true">
 
-        <activity android:name=".UI.DetailsActivity" />
 
-        <activity android:name=".UI.SplashActivity"
+
+        <activity android:name=".ui.splash.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,19 +28,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UI.MainActivity"/>
+        <activity android:name=".ui.main.MainActivity"/>
 
-        <activity
-            android:name=".UI.SearchActivity"
-            android:configChanges="orientation|screenSize"
+        <activity android:name=".ui.search.SearchActivity"
+            android:configChanges="orientation|screenSize"/>
+
+        <activity android:name=".ui.details.DetailsActivity" />
+
+        <activity android:name=".ui.watchLater.WatchLaterActivity"
             android:theme="@style/NoActionBar"/>
 
-
-        <activity
-            android:name=".UI.WatchLaterActivity"
-            android:theme="@style/NoActionBar"/>
-
-        <activity android:name=".UI.VideoPlayerActivity"
+        <activity android:name=".ui.video.VideoPlayerActivity"
             android:configChanges="orientation|screenSize"/>
     </application>
 

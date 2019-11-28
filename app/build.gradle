@@ -53,10 +53,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    //Facebook shimmer//
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     //architecture component//
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.room:room-runtime:2.2.1'
-    annotationProcessor 'androidx.room:room-compiler:2.2.1'
+    implementation 'androidx.room:room-runtime:2.2.2'
+    annotationProcessor 'androidx.room:room-compiler:2.2.2'
     implementation 'androidx.paging:paging-runtime:2.1.0'
 
     //youtube player

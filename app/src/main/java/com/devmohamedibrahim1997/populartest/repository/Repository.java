@@ -1,10 +1,10 @@
-package com.devmohamedibrahim1997.populartest.UI;
+package com.devmohamedibrahim1997.populartest.repository;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.annotation.NonNull;
 
-import com.devmohamedibrahim1997.populartest.NetWork.APIClient;
-import com.devmohamedibrahim1997.populartest.NetWork.MovieDBAPI;
+import com.devmohamedibrahim1997.populartest.network.APIClient;
+import com.devmohamedibrahim1997.populartest.network.MovieDBAPI;
 import com.devmohamedibrahim1997.populartest.model.CreditResponse;
 import com.devmohamedibrahim1997.populartest.model.Movie;
 import com.devmohamedibrahim1997.populartest.model.DetailsResponse;
@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-class Repository {
+public class Repository {
 
     private static Integer movieId;
     private MutableLiveData<CreditResponse> movieCredit = new MutableLiveData<>();
@@ -28,12 +28,12 @@ class Repository {
     private MutableLiveData<List<Videos>> movieVideos = new MutableLiveData<>();
 
 
-    static Repository getInstance(Integer mMovieId) {
+    public static Repository getInstance(Integer mMovieId) {
         movieId = mMovieId;
         return new Repository();
     }
 
-    MutableLiveData<CreditResponse> getMovieCredit() {
+    public MutableLiveData<CreditResponse> getMovieCredit() {
         APIClient.getInstance()
                 .create(MovieDBAPI.class)
                 .getMovieCreditsResponse(movieId)
@@ -52,7 +52,7 @@ class Repository {
         return movieCredit;
     }
 
-    MutableLiveData<DetailsResponse> getMovieDetails() {
+    public MutableLiveData<DetailsResponse> getMovieDetails() {
         APIClient.getInstance()
                 .create(MovieDBAPI.class)
                 .getMovieDetails(movieId)
@@ -71,7 +71,7 @@ class Repository {
         return movieDetail;
     }
 
-    MutableLiveData<List<Movie>> getSimilarMovies() {
+    public MutableLiveData<List<Movie>> getSimilarMovies() {
         APIClient.getInstance()
                 .create(MovieDBAPI.class)
                 .getSimilarResponse(movieId)
@@ -90,7 +90,7 @@ class Repository {
         return similarMovies;
     }
 
-    MutableLiveData<List<Movie>> getRecommendedMovies() {
+    public MutableLiveData<List<Movie>> getRecommendedMovies() {
         APIClient.getInstance()
                 .create(MovieDBAPI.class)
                 .getRecommendationResponse(movieId)
@@ -109,7 +109,7 @@ class Repository {
         return recommendedMovies;
     }
 
-    MutableLiveData<List<Videos>> getMovieVideos() {
+    public MutableLiveData<List<Videos>> getMovieVideos() {
         APIClient.getInstance()
                 .create(MovieDBAPI.class)
                 .getMovieVideosResponse(movieId)

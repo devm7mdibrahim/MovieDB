@@ -1,4 +1,4 @@
-package com.devmohamedibrahim1997.populartest.Room;
+package com.devmohamedibrahim1997.populartest.database;
 
 import com.devmohamedibrahim1997.populartest.model.MovieEntity;
 

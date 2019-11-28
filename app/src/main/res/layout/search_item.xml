@@ -3,7 +3,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="SearchDataBinding">
-        <import type="com.devmohamedibrahim1997.populartest.Utils.HelperClass"/>
+        <import type="com.devmohamedibrahim1997.populartest.utils.HelperClass"/>
         <variable
             name="movie"
             type="com.devmohamedibrahim1997.populartest.model.Movie" />

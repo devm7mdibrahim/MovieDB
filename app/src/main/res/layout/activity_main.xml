@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".UI.MainActivity"
+        tools:context=".ui.main.MainActivity"
         tools:ignore="HardcodedText">
 
         <RelativeLayout
@@ -26,14 +26,6 @@
                 android:layout_above="@id/mainBottomNavigationView"
                 android:layout_below="@id/mainToolBar" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/mainViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/mainBottomNavigationView"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_below="@id/mainToolBar" />
-
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/mainBottomNavigationView"
                 android:layout_width="match_parent"
@@ -41,8 +33,7 @@
                 android:layout_alignParentBottom="true"
                 app:menu="@menu/bottom_navigation"
                 app:itemIconTint="@color/colors"
-                app:itemTextColor="@color/colors"
-                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+                app:itemTextColor="@color/colors" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/mainToolBar"

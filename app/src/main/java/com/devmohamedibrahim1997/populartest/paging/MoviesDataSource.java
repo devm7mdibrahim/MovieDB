@@ -2,14 +2,14 @@ package com.devmohamedibrahim1997.populartest.paging;
 
 import androidx.paging.PageKeyedDataSource;
 import androidx.annotation.NonNull;
-import com.devmohamedibrahim1997.populartest.NetWork.APIClient;
-import com.devmohamedibrahim1997.populartest.NetWork.MovieDBAPI;
+import com.devmohamedibrahim1997.populartest.network.APIClient;
+import com.devmohamedibrahim1997.populartest.network.MovieDBAPI;
 import com.devmohamedibrahim1997.populartest.model.Movie;
 import com.devmohamedibrahim1997.populartest.model.MovieResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import static com.devmohamedibrahim1997.populartest.Utils.Constant.FIRST_PAGE;
+import static com.devmohamedibrahim1997.populartest.utils.Constant.FIRST_PAGE;
 
 public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
 
